@@ -37,6 +37,13 @@ func Provider() *schema.Provider {
 				Description: descriptions["password"],
 				Sensitive:   true,
 			},
+			"ssl_verify": &schema.Schema{
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Default:     false,
+				Description: descriptions["ssl_verify"],
+				Sensitive:   true,
+			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"awx_inventory": resourceInventoryObject(),
@@ -51,9 +58,10 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	log.Printf("[INFO] Initializing Tower Client")
 
 	config := &Config{
-		Endpoint: d.Get("endpoint").(string),
-		Username: d.Get("username").(string),
-		Password: d.Get("password").(string),
+		Endpoint:   d.Get("endpoint").(string),
+		Username:   d.Get("username").(string),
+		Password:   d.Get("password").(string),
+		Ssl_verify: d.Get("ssl_verify").(bool),
 	}
 
 	return config.Client(), nil
@@ -63,8 +71,9 @@ var descriptions map[string]string
 
 func init() {
 	descriptions = map[string]string{
-		"endpoint": "The API Endpoint used to invoke Ansible Tower/AWX",
-		"username": "The Ansible Tower API Username",
-		"password": "The Ansible Tower API Password",
+		"endpoint":   "The API Endpoint used to invoke Ansible Tower/AWX",
+		"username":   "The Ansible Tower API Username",
+		"password":   "The Ansible Tower API Password",
+		"ssl_verify": "Skip SSL certificate check",
 	}
 }
