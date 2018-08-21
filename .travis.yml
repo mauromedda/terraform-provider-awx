@@ -17,9 +17,6 @@ install:
 - bash scripts/gogetcookie.sh
 - go get -u github.com/kardianos/govendor
 
-before_script:
-- govendor fetch +external +missing
-
 script:
 - make test
 - make vendor-status
