@@ -1,4 +1,3 @@
-// File : resource_inventory.go
 package awx
 
 import (
@@ -64,6 +63,7 @@ func resourceInventoryCreate(d *schema.ResourceData, m interface{}) error {
 	result, err := awxService.CreateInventory(map[string]interface{}{
 		"name":         d.Get("name").(string),
 		"organization": d.Get("organization").(string),
+		"description":  d.Get("description").(string),
 		"kind":         d.Get("kind").(string),
 		"host_filter":  d.Get("host_filter").(string),
 		"variables":    d.Get("variables").(string),
@@ -91,6 +91,7 @@ func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 	_, err = awxService.UpdateInventory(id, map[string]interface{}{
 		"name":         d.Get("name").(string),
 		"organization": d.Get("organization").(string),
+		"description":  d.Get("description").(string),
 		"kind":         d.Get("kind").(string),
 		"host_filter":  d.Get("host_filter").(string),
 		"variables":    d.Get("variables").(string),
@@ -134,8 +135,10 @@ func resourceInventoryDelete(d *schema.ResourceData, m interface{}) error {
 
 func setInventoryResourceData(d *schema.ResourceData, r *awxgo.Inventory) *schema.ResourceData {
 	d.Set("name", r.Name)
-	d.Set("description", r.Description)
 	d.Set("organization", strconv.Itoa(r.Organization))
+	d.Set("description", r.Description)
+	d.Set("kind", r.Kind)
+	d.Set("host_filter", r.HostFilter)
 	d.Set("variables", r.Variables)
 	return d
 }

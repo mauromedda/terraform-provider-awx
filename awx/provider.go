@@ -4,9 +4,11 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform/terraform"
 )
 
-func Provider() *schema.Provider {
+// Provider AWX provider implementation
+func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"endpoint": &schema.Schema{
@@ -58,10 +60,10 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	log.Printf("[INFO] Initializing Tower Client")
 
 	config := &Config{
-		Endpoint:   d.Get("endpoint").(string),
-		Username:   d.Get("username").(string),
-		Password:   d.Get("password").(string),
-		Ssl_verify: d.Get("ssl_verify").(bool),
+		Endpoint:  d.Get("endpoint").(string),
+		Username:  d.Get("username").(string),
+		Password:  d.Get("password").(string),
+		Sslverify: d.Get("ssl_verify").(bool),
 	}
 
 	return config.Client(), nil

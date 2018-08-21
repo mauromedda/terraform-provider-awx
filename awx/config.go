@@ -9,10 +9,10 @@ import (
 
 // Config of Ansible Tower/AWX
 type Config struct {
-	Username   string
-	Password   string
-	Endpoint   string
-	Ssl_verify bool
+	Username  string
+	Password  string
+	Endpoint  string
+	Sslverify bool
 }
 
 // Client for Tower/AWX API v2
