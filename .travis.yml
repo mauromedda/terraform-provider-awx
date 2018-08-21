@@ -4,6 +4,7 @@ services:
   - docker
 language: go
 go:
+- 1.10.3
 - 1.9.1
 
 git:
@@ -15,7 +16,10 @@ install:
 # packages that live there.
 # See: https://github.com/golang/go/issues/12933
 - bash scripts/gogetcookie.sh
-- go get github.com/kardianos/govendor
+- go get -u github.com/kardianos/govendor
+
+before_script:
+- govendor fetch +out
 
 script:
 - make test
