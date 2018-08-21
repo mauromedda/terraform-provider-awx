@@ -18,7 +18,7 @@ install:
 - go get -u github.com/kardianos/govendor
 
 before_script:
-- govendor fetch +external +program +missing
+- govendor fetch +external +missing
 
 script:
 - make test
