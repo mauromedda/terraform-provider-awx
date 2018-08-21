@@ -1,4 +1,4 @@
-TEST?=./...
+TEST?=./awx
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 PKG_NAME=awx
 BINARY                  ?= terraform-provider-awx
@@ -57,5 +57,5 @@ test-compile:
 	go test -c $(TEST) $(TESTARGS)
 
 
-.PHONY: build sweep test testacc vet fmt fmtcheck errcheck vendor-status test-compile website website-test
+.PHONY: build sweep test testacc vet fmt fmtcheck errcheck vendor-status test-compile
 
