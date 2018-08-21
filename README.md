@@ -7,6 +7,7 @@ terraform-provider-awx is still in developing, and it's roadmap could be found a
 Terraform Provider
 ==================
 
+- [![Build Status](https://travis-ci.org/mauromedda/terraform-provider-awx.svg?branch=master)](https://travis-ci.org/mauromedda/terraform-provider-awx)
 - Website: https://www.terraform.io
 - [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
 - Mailing list: [Google Groups](http://groups.google.com/group/terraform-tool)
