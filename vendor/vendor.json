@@ -705,10 +705,6 @@
 			"revisionTime": "2018-08-10T18:32:07Z"
 		},
 		{
-			"path": "github.com/mauromedda/terraform-provider-awx",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "H3IQOMnazofqqNSyfY/GIx1T3mU=",
 			"origin": "github.com/hashicorp/terraform/vendor/github.com/mitchellh/cli",
 			"path": "github.com/mitchellh/cli",
