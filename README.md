@@ -56,7 +56,7 @@ $ $GOPATH/bin/terraform-provider-awx
 
 In order to test the provider, you can simply run `make test`.
 
-*Note:* Make sure no `AWX_ENDPOINT`, `AWX_USERNAME`, `AWX_PASSWORD` variables are set. The default are:
+*Note:* Make sure `AWX_ENDPOINT`, `AWX_USERNAME`, `AWX_PASSWORD` variables are set. The default are:
 
 AWX_ENDPOINT=http://localhost
 AWX_USERNAME=admin
@@ -73,4 +73,6 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 ```sh
 $ make testacc
 ```
+
+Acceptance tests need a fully functional AWX/Tower endpoint.
 
