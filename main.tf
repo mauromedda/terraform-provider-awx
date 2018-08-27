@@ -9,4 +9,9 @@ resource "awx_inventory" "test" {
 resource "awx_inventory" "test1" {
 	name = "test1003"
 	organization = 1
+	variables = <<EOF
+---
+test: 1
+other: 2
+EOF
 }

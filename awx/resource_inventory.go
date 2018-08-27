@@ -40,9 +40,10 @@ func resourceInventoryObject() *schema.Resource {
 				Default:  "",
 			},
 			"variables": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "",
+				Type:      schema.TypeString,
+				Optional:  true,
+				Default:   "",
+				StateFunc: normalizeJsonYaml,
 			},
 		},
 		Importer: &schema.ResourceImporter{
@@ -82,25 +83,27 @@ func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 	awxService := awx.InventoriesService
 	_, res, _ := awxService.ListInventories(map[string]string{"name": d.Get("name").(string)})
 	if len(res.Results) >= 1 {
-		return fmt.Errorf("Inventory %s with id %d already exists", res.Results[0].Name, res.Results[0].ID)
-	}
-	id, err := strconv.Atoi(d.Id())
-	if err != nil {
-		return err
-	}
-	_, err = awxService.UpdateInventory(id, map[string]interface{}{
-		"name":         d.Get("name").(string),
-		"organization": d.Get("organization").(string),
-		"description":  d.Get("description").(string),
-		"kind":         d.Get("kind").(string),
-		"host_filter":  d.Get("host_filter").(string),
-		"variables":    d.Get("variables").(string),
-	}, nil)
-	if err != nil {
-		return err
+
+		id, err := strconv.Atoi(d.Id())
+		if err != nil {
+			return err
+		}
+		_, err = awxService.UpdateInventory(id, map[string]interface{}{
+			"name":         d.Get("name").(string),
+			"organization": d.Get("organization").(string),
+			"description":  d.Get("description").(string),
+			"kind":         d.Get("kind").(string),
+			"host_filter":  d.Get("host_filter").(string),
+			"variables":    d.Get("variables").(string),
+		}, nil)
+		if err != nil {
+			return err
+		}
+
+		return resourceInventoryRead(d, m)
 	}
 
-	return resourceInventoryRead(d, m)
+	return fmt.Errorf("Inventory %s with id %d doesn't exist", res.Results[0].Name, res.Results[0].ID)
 
 }
 
@@ -139,6 +142,6 @@ func setInventoryResourceData(d *schema.ResourceData, r *awxgo.Inventory) *schem
 	d.Set("description", r.Description)
 	d.Set("kind", r.Kind)
 	d.Set("host_filter", r.HostFilter)
-	d.Set("variables", r.Variables)
+	d.Set("variables", normalizeJsonYaml(r.Variables))
 	return d
 }
