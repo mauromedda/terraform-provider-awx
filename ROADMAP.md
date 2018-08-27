@@ -4,8 +4,8 @@
 - [x] Create the provider acceptance test;
 - [x] Create the provider unit test;
 - [x] Create the resource inventory;
-      - Create, update, read, delete basic inventory [x]
-      - Load variables [ ]
+      - [x] Create, update, read, delete basic inventory
+      - [ ] Load variables
 - [ ] Create the inventory group resource and tests;
 - [ ] Create the inventory host resource and tests;
 - [-] Create inventory tests;
