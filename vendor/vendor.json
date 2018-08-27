@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "/OrD1KduPuft4fvxXpre1RsbyyI=",
+			"checksumSHA1": "mPHAW42rmPDRrweRuLPiWbfTUwY=",
 			"path": "github.com/Colstuwjx/awx-go",
-			"revision": "41f9612cba347d7f7ee73462c741067e19c6a195",
-			"revisionTime": "2018-08-19T12:21:11Z"
+			"revision": "d31e41dcd527ca61c08a252d43ade8c5e1c4aac7",
+			"revisionTime": "2018-08-25T01:14:45Z"
 		},
 		{
 			"checksumSHA1": "jQh1fnoKPKMURvKkpdRjN695nAQ=",

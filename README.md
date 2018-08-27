@@ -75,4 +75,3 @@ $ make testacc
 ```
 
 Acceptance tests need a fully functional AWX/Tower endpoint.
-
