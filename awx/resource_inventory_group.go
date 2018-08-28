@@ -29,6 +29,7 @@ func resourceInventoryGroupObject() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  nil,
+				ForceNew: true,
 			},
 			"variables": &schema.Schema{
 				Type:      schema.TypeString,
@@ -71,10 +72,42 @@ func resourceInventoryGroupCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceInventoryGroupUpdate(d *schema.ResourceData, m interface{}) error {
-	return nil
+	awx := m.(*awxgo.AWX)
+	awxService := awx.GroupService
+	_, res, _ := awxService.ListGroups(map[string]string{"name": d.Get("name").(string)})
+	id, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return err
+	}
+	if len(res.Results) >= 1 {
+
+		_, err = awxService.UpdateGroup(id, map[string]interface{}{
+			"name":        d.Get("name").(string),
+			"description": d.Get("description").(string),
+			"inventory":   d.Get("inventory").(string),
+			"variables":   d.Get("variables").(string),
+		}, nil)
+		if err != nil {
+			return err
+		}
+
+		return resourceInventoryGroupRead(d, m)
+	}
+	return fmt.Errorf("Group %s with id %d doesn't exist", d.Get("name").(string), id)
+
 }
 
 func resourceInventoryGroupDelete(d *schema.ResourceData, m interface{}) error {
+	awx := m.(*awxgo.AWX)
+	awxService := awx.GroupService
+	id, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return fmt.Errorf("InventoryGroup %d not found", id)
+	}
+	if _, err := awxService.DeleteGroup(id); err != nil {
+		return err
+	}
+	d.SetId("")
 	return nil
 }
 

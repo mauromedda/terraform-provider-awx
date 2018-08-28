@@ -82,12 +82,12 @@ func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.InventoriesService
 	_, res, _ := awxService.ListInventories(map[string]string{"name": d.Get("name").(string)})
+	id, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return err
+	}
 	if len(res.Results) >= 1 {
 
-		id, err := strconv.Atoi(d.Id())
-		if err != nil {
-			return err
-		}
 		_, err = awxService.UpdateInventory(id, map[string]interface{}{
 			"name":         d.Get("name").(string),
 			"organization": d.Get("organization").(string),
@@ -103,7 +103,7 @@ func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 		return resourceInventoryRead(d, m)
 	}
 
-	return fmt.Errorf("Inventory %s with id %d doesn't exist", res.Results[0].Name, res.Results[0].ID)
+	return fmt.Errorf("Inventory %s with id %d doesn't exist", d.Get("name").(string), id)
 
 }
 

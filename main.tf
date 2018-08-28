@@ -20,5 +20,5 @@ EOF
 resource "awx_inventory_group" "test1_gr1" {
 	name = "test_group"
 	inventory = "${awx_inventory.test1.id}"
-	description = "test group 1"
+	description = "test group 1 ciao"
 }

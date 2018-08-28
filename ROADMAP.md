@@ -5,10 +5,12 @@
 - [x] Create the provider unit test
 - [x] Create the resource inventory
       - [x] Create, update, read, delete basic inventory
-      - [ ] Load variables
-- [ ] Create the inventory group resource and tests
+      - [x] Load variables
+- [x] Create the inventory group resource and tests
+      - [x] Create, Read, Delete
+      - [x] Update
 - [ ] Create the inventory host resource and tests
-- [-] Create inventory tests
+- [x] Create inventory tests
       -  [x] Basic CRUD test acc
 - [ ] Create the resurce organization and tests
 - [ ] Create the resource project and tests

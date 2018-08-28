@@ -185,7 +185,7 @@ type Project struct {
 	LastJobFailed         bool      `json:"last_job_failed"`
 	NextJobRun            time.Time `json:"next_job_run"`
 	Status                string    `json:"status"`
-	Organization          string    `json:"organization"`
+	Organization          int       `json:"organization"`
 	ScmDeleteOnNextUpdate bool      `json:"scm_delete_on_next_update"`
 	ScmUpdateOnLaunch     bool      `json:"scm_update_on_launch"`
 	ScmUpdateCacheTimeout int       `json:"scm_update_cache_timeout"`
@@ -592,7 +592,7 @@ type User struct {
 // Group represents a group
 type Group struct {
 	ID                       int       `json:"id"`
-	Type                     int       `json:"type"`
+	Type                     string    `json:"type"`
 	URL                      string    `json:"url"`
 	Related                  *Related  `json:"related"`
 	SummaryFields            *Summary  `json:"summary_fields"`
