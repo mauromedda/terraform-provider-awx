@@ -5,21 +5,25 @@ pkgs          = $(shell $(GO) list ./... | grep -v /vendor/ )
 BUILD_ENTRY             ?= ./*.go
 BINARY                  ?= awx-go
 
-all: format build test
+all: format vendor-status build test
 
 style:
 	@echo ">> checking code style"
 	@! gofmt -d $(shell find . -path ./vendor -prune -o -name '*.go' -print) | grep '^'
 
-test-short:
+install-test-reqs:
+	@$(GO) get -u github.com/kylelemons/godebug/pretty
+	@$(GO) get -u github.com/kylelemons/godebug/diff
+
+test-short: install-test-reqs
 	@echo ">> running short tests"
 	@$(GO) test -short $(pkgs)
 
-test:
+test: install-test-reqs
 	@echo ">> running all tests"
 	@$(GO) test $(pkgs)
 
-lint:
+lint: install-test-reqs
 	@gometalinter --vendor --disable-all --enable=gosimple --enable=golint --enable=vet --enable=ineffassign --enable=unconvert \
     --exclude="by other packages, and that stutters; consider calling this" \
     --skip=proto \
@@ -35,8 +39,12 @@ vet:
 	@echo ">> vetting code"
 	@$(GO) vet $(pkgs)
 
+vendor-status:
+	@echo ">> vendor status"
+	@govendor status
+
 build:
 	@echo ">> building binaries"
 	@$(GO) build -o $(BINARY) $(BUILD_ENTRY)
 
-.PHONY: all style format build test test-short vet
+.PHONY: all style format build test test-short vet vendor-status

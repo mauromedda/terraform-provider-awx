@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "nQbPbp0qcye70t6UBQhd+qMMfRo=",
+			"checksumSHA1": "COXYdbKfWrQxru/d1SmAqQa2hn0=",
 			"path": "github.com/Colstuwjx/awx-go",
-			"revision": "c8b483c6c4396cad2e404fb5290c2606d8974c1f",
-			"revisionTime": "2018-08-28T21:35:55Z"
+			"revision": "1a9b65fe935197528b8b8f74ddd9a3be8dae4d66",
+			"revisionTime": "2018-09-01T15:31:24Z"
 		},
 		{
 			"checksumSHA1": "jQh1fnoKPKMURvKkpdRjN695nAQ=",
@@ -696,6 +696,18 @@
 			"path": "github.com/jmespath/go-jmespath",
 			"revision": "bb37637a139151be0ff9bf00c85c448538e5b3d2",
 			"revisionTime": "2018-08-10T18:32:07Z"
+		},
+		{
+			"checksumSHA1": "0xjvz/KGzXhAFsnDRvzofE0xNzI=",
+			"path": "github.com/kylelemons/godebug/diff",
+			"revision": "d65d576e9348f5982d7f6d83682b694e731a45c6",
+			"revisionTime": "2017-08-20T00:43:49Z"
+		},
+		{
+			"checksumSHA1": "ED154c1vFO2UMbFwdOZZ9KdfAzw=",
+			"path": "github.com/kylelemons/godebug/pretty",
+			"revision": "d65d576e9348f5982d7f6d83682b694e731a45c6",
+			"revisionTime": "2017-08-20T00:43:49Z"
 		},
 		{
 			"checksumSHA1": "1otkAg+0Q9NksNSuQ3ijCW0xHxE=",
