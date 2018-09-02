@@ -25,10 +25,9 @@ func resourceInventoryGroupObject() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
-			"inventory": &schema.Schema{
+			"inventory_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  nil,
 				ForceNew: true,
 			},
 			"variables": &schema.Schema{
@@ -50,7 +49,7 @@ func resourceInventoryGroupCreate(d *schema.ResourceData, m interface{}) error {
 
 	_, res, _ := awxService.ListGroups(map[string]string{
 		"name":      d.Get("name").(string),
-		"inventory": d.Get("inventory").(string),
+		"inventory": d.Get("inventory_id").(string),
 	})
 	if len(res.Results) >= 1 {
 		return fmt.Errorf("InventoryGroup %s with id %d already exists", res.Results[0].Name, res.Results[0].ID)
@@ -59,7 +58,7 @@ func resourceInventoryGroupCreate(d *schema.ResourceData, m interface{}) error {
 	result, err := awxService.CreateGroup(map[string]interface{}{
 		"name":        d.Get("name").(string),
 		"description": d.Get("description").(string),
-		"inventory":   d.Get("inventory").(string),
+		"inventory":   d.Get("inventory_id").(string),
 		"variables":   d.Get("variables").(string),
 	}, map[string]string{})
 	if err != nil {
@@ -84,7 +83,7 @@ func resourceInventoryGroupUpdate(d *schema.ResourceData, m interface{}) error {
 		_, err = awxService.UpdateGroup(id, map[string]interface{}{
 			"name":        d.Get("name").(string),
 			"description": d.Get("description").(string),
-			"inventory":   d.Get("inventory").(string),
+			"inventory":   d.Get("inventory_id").(string),
 			"variables":   d.Get("variables").(string),
 		}, nil)
 		if err != nil {
@@ -120,7 +119,7 @@ func resourceInventoryGroupRead(d *schema.ResourceData, m interface{}) error {
 	}
 	_, res, err := awxService.ListGroups(map[string]string{
 		"name":      d.Get("name").(string),
-		"inventory": d.Get("inventory").(string),
+		"inventory": d.Get("inventory_id").(string),
 	})
 	if err != nil {
 		return err
@@ -132,7 +131,7 @@ func resourceInventoryGroupRead(d *schema.ResourceData, m interface{}) error {
 func setInventoryGroupResourceData(d *schema.ResourceData, r *awxgo.Group) *schema.ResourceData {
 	d.Set("name", r.Name)
 	d.Set("description", r.Description)
-	d.Set("inventory", r.Inventory)
+	d.Set("inventory_id", r.Inventory)
 	d.Set("variables", normalizeJsonYaml(r.Variables))
 	return d
 }

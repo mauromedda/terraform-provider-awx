@@ -21,7 +21,7 @@ func resourceGroupAssociationObject() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"inventory": &schema.Schema{
+			"inventory_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
 			},
@@ -54,7 +54,7 @@ func resourceGroupAssociationCreate(d *schema.ResourceData, m interface{}) error
 	awxServiceGroup := awx.GroupService
 	var id, inv int
 	id = d.Get("host_id").(int)
-	inv = d.Get("inventory").(int)
+	inv = d.Get("inventory_id").(int)
 	_, resHost, _ := awxServiceHost.ListHosts(map[string]string{
 		"id":        strconv.Itoa(id),
 		"inventory": strconv.Itoa(inv)},
@@ -97,7 +97,7 @@ func resourceGroupAssociationDelete(d *schema.ResourceData, m interface{}) error
 	awxServiceGroup := awx.GroupService
 	var id, inv int
 	id = d.Get("host_id").(int)
-	inv = d.Get("inventory").(int)
+	inv = d.Get("inventory_id").(int)
 	_, resHost, _ := awxServiceHost.ListHosts(map[string]string{
 		"id":        strconv.Itoa(id),
 		"inventory": strconv.Itoa(inv)},
@@ -127,7 +127,7 @@ func resourceGroupAssociationDelete(d *schema.ResourceData, m interface{}) error
 
 func setGroupAssociationResourceData(d *schema.ResourceData) *schema.ResourceData {
 	d.Set("name", d.Get("name").(string))
-	d.Set("inventory", d.Get("inventory").(int))
+	d.Set("inventory_id", d.Get("inventory_id").(int))
 	d.Set("host_id", d.Get("host_id").(int))
 	d.Set("group_id", d.Get("group_id").(int))
 	return d

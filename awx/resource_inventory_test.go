@@ -18,7 +18,7 @@ func TestAccAWXInventory(t *testing.T) {
 				Config: testAccInventoryConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckState("name", "testacc"),
-					testAccCheckState("organization", "1"),
+					testAccCheckState("organization_id", "1"),
 					testAccCheckState("description", "AWX Acc test"),
 				),
 			},
@@ -54,7 +54,7 @@ func testAccCheckState(skey, svalue string) resource.TestCheckFunc {
 const testAccInventoryConfig = `
 resource "awx_inventory" "testacc" {
 	name = "testacc"
-	organization = 1
+	organization_id = 1
 	description = "AWX Acc test"
 }
 `

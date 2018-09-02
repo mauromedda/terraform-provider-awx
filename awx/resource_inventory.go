@@ -25,7 +25,7 @@ func resourceInventoryObject() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
-			"organization": &schema.Schema{
+			"organization_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -58,7 +58,7 @@ func resourceInventoryCreate(d *schema.ResourceData, m interface{}) error {
 
 	_, res, _ := awxService.ListInventories(map[string]string{
 		"name":         d.Get("name").(string),
-		"organization": d.Get("organization").(string),
+		"organization": d.Get("organization_id").(string),
 	})
 	if len(res.Results) >= 1 {
 		return fmt.Errorf("Inventory %s with id %d already exists", res.Results[0].Name, res.Results[0].ID)
@@ -66,7 +66,7 @@ func resourceInventoryCreate(d *schema.ResourceData, m interface{}) error {
 
 	result, err := awxService.CreateInventory(map[string]interface{}{
 		"name":         d.Get("name").(string),
-		"organization": d.Get("organization").(string),
+		"organization": d.Get("organization_id").(string),
 		"description":  d.Get("description").(string),
 		"kind":         d.Get("kind").(string),
 		"host_filter":  d.Get("host_filter").(string),
@@ -93,7 +93,7 @@ func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 
 		_, err = awxService.UpdateInventory(id, map[string]interface{}{
 			"name":         d.Get("name").(string),
-			"organization": d.Get("organization").(string),
+			"organization": d.Get("organization_id").(string),
 			"description":  d.Get("description").(string),
 			"kind":         d.Get("kind").(string),
 			"host_filter":  d.Get("host_filter").(string),
@@ -141,7 +141,7 @@ func resourceInventoryDelete(d *schema.ResourceData, m interface{}) error {
 
 func setInventoryResourceData(d *schema.ResourceData, r *awxgo.Inventory) *schema.ResourceData {
 	d.Set("name", r.Name)
-	d.Set("organization", strconv.Itoa(r.Organization))
+	d.Set("organization_id", strconv.Itoa(r.Organization))
 	d.Set("description", r.Description)
 	d.Set("kind", r.Kind)
 	d.Set("host_filter", r.HostFilter)

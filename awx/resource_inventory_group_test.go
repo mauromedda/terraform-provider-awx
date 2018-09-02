@@ -48,13 +48,13 @@ func testAccCheckStateGroup(skey, svalue string) resource.TestCheckFunc {
 const testAccInventoryGroupConfig = `
 resource "awx_inventory" "testacc" {
 	name = "testacc-grp"
-	organization = 1
+	organization_id = 1
 	description = "AWX Acc test"
 }
 
 resource "awx_inventory_group" "testacc-grp" {
 	name = "testacc-grp_1"
-	inventory = "${awx_inventory.testacc.id}"
+	inventory_id = "${awx_inventory.testacc.id}"
 	description = "AWX Acc test group"
 }
 `

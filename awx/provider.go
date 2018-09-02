@@ -52,6 +52,8 @@ func Provider() terraform.ResourceProvider {
 			"awx_inventory_group":   resourceInventoryGroupObject(),
 			"awx_host":              resourceHostObject(),
 			"awx_group_association": resourceGroupAssociationObject(),
+			"awx_project":           resourceProjectObject(),
+			"awx_job_template":      resourceJobTemplateObject(),
 		},
 
 		ConfigureFunc: providerConfigure,

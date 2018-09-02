@@ -9,7 +9,7 @@
 - [x] Create the inventory group resource and tests
       - [x] Create, Read, Delete
       - [x] Update
-- [ ] Create the inventory host resource and tests
+- [x] Create the inventory host resource and tests
 - [x] Create inventory tests
       -  [x] Basic CRUD test acc
 - [ ] Create the resurce organization and tests
