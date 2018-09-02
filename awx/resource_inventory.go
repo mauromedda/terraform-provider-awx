@@ -56,7 +56,10 @@ func resourceInventoryCreate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.InventoriesService
 
-	_, res, _ := awxService.ListInventories(map[string]string{"name": d.Get("name").(string)})
+	_, res, _ := awxService.ListInventories(map[string]string{
+		"name":         d.Get("name").(string),
+		"organization": d.Get("organization").(string),
+	})
 	if len(res.Results) >= 1 {
 		return fmt.Errorf("Inventory %s with id %d already exists", res.Results[0].Name, res.Results[0].ID)
 	}
@@ -81,11 +84,11 @@ func resourceInventoryCreate(d *schema.ResourceData, m interface{}) error {
 func resourceInventoryUpdate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.InventoriesService
-	_, res, _ := awxService.ListInventories(map[string]string{"name": d.Get("name").(string)})
 	id, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return err
 	}
+	_, res, _ := awxService.ListInventories(map[string]string{"id": d.Id()})
 	if len(res.Results) >= 1 {
 
 		_, err = awxService.UpdateInventory(id, map[string]interface{}{

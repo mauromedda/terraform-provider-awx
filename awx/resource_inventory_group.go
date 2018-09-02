@@ -74,11 +74,11 @@ func resourceInventoryGroupCreate(d *schema.ResourceData, m interface{}) error {
 func resourceInventoryGroupUpdate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.GroupService
-	_, res, _ := awxService.ListGroups(map[string]string{"name": d.Get("name").(string)})
 	id, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return err
 	}
+	_, res, _ := awxService.ListGroups(map[string]string{"id": d.Id()})
 	if len(res.Results) >= 1 {
 
 		_, err = awxService.UpdateGroup(id, map[string]interface{}{

@@ -48,8 +48,10 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"awx_inventory":       resourceInventoryObject(),
-			"awx_inventory_group": resourceInventoryGroupObject(),
+			"awx_inventory":         resourceInventoryObject(),
+			"awx_inventory_group":   resourceInventoryGroupObject(),
+			"awx_host":              resourceHostObject(),
+			"awx_group_association": resourceGroupAssociationObject(),
 		},
 
 		ConfigureFunc: providerConfigure,

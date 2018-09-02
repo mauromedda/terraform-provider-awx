@@ -21,12 +21,12 @@ func resourceHostObject() *schema.Resource {
 				Required: true,
 			},
 			"description": &schema.Schema{
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "",
 			},
 			"inventory": &schema.Schema{
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Required: true,
 			},
 			"enabled": &schema.Schema{
@@ -53,21 +53,25 @@ func resourceHostObject() *schema.Resource {
 }
 
 func resourceHostCreate(d *schema.ResourceData, m interface{}) error {
+
 	awx := m.(*awxgo.AWX)
 	awxService := awx.HostService
 
-	_, res, _ := awxService.ListHosts(map[string]string{"name": d.Get("name").(string)})
+	_, res, _ := awxService.ListHosts(map[string]string{
+		"name":      d.Get("name").(string),
+		"inventory": d.Get("inventory").(string)},
+	)
 	if len(res.Results) >= 1 {
 		return fmt.Errorf("Host %s with id %d already exists", res.Results[0].Name, res.Results[0].ID)
 	}
 
 	result, err := awxService.CreateHost(map[string]interface{}{
-		"name":         d.Get("name").(string),
-		"organization": d.Get("organization").(string),
-		"description":  d.Get("description").(string),
-		"kind":         d.Get("kind").(string),
-		"host_filter":  d.Get("host_filter").(string),
-		"variables":    d.Get("variables").(string),
+		"name":        d.Get("name").(string),
+		"description": d.Get("description").(string),
+		"inventory":   d.Get("inventory").(int),
+		"enabled":     d.Get("enabled").(bool),
+		"instance_id": d.Get("instance_id").(string),
+		"variables":   d.Get("variables").(string),
 	}, map[string]string{})
 	if err != nil {
 		return err
@@ -75,13 +79,12 @@ func resourceHostCreate(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(strconv.Itoa(result.ID))
 	return resourceHostRead(d, m)
-
 }
 
 func resourceHostUpdate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.HostService
-	_, res, _ := awxService.ListInventories(map[string]string{"name": d.Get("name").(string)})
+	_, res, _ := awxService.ListHosts(map[string]string{"id": d.Id()})
 	id, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return err
@@ -89,12 +92,12 @@ func resourceHostUpdate(d *schema.ResourceData, m interface{}) error {
 	if len(res.Results) >= 1 {
 
 		_, err = awxService.UpdateHost(id, map[string]interface{}{
-			"name":         d.Get("name").(string),
-			"organization": d.Get("organization").(string),
-			"description":  d.Get("description").(string),
-			"kind":         d.Get("kind").(string),
-			"host_filter":  d.Get("host_filter").(string),
-			"variables":    d.Get("variables").(string),
+			"name":        d.Get("name").(string),
+			"description": d.Get("description").(string),
+			"inventory":   d.Get("inventory").(int),
+			"enabled":     d.Get("enabled").(bool),
+			"instance_id": d.Get("instance_id").(string),
+			"variables":   d.Get("variables").(string),
 		}, nil)
 		if err != nil {
 			return err
@@ -108,17 +111,18 @@ func resourceHostUpdate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceHostRead(d *schema.ResourceData, m interface{}) error {
+	return nil
 	awx := m.(*awxgo.AWX)
 	awxService := awx.HostService
 	id, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return fmt.Errorf("Host %d not found", id)
 	}
-	r, err := awxService.GetHost(id, map[string]string{})
+	_, res, _ := awxService.ListHosts(map[string]string{"id": d.Id()})
 	if err != nil {
 		return err
 	}
-	d = setHostResourceData(d, r)
+	d = setHostResourceData(d, res.Results[0])
 	return nil
 }
 
@@ -138,10 +142,10 @@ func resourceHostDelete(d *schema.ResourceData, m interface{}) error {
 
 func setHostResourceData(d *schema.ResourceData, r *awxgo.Host) *schema.ResourceData {
 	d.Set("name", r.Name)
-	d.Set("organization", strconv.Itoa(r.Organization))
 	d.Set("description", r.Description)
-	d.Set("kind", r.Kind)
-	d.Set("host_filter", r.HostFilter)
+	d.Set("inventory", r.Inventory)
+	d.Set("enabled", r.Enabled)
+	d.Set("instance_id", r.InstanceID)
 	d.Set("variables", normalizeJsonYaml(r.Variables))
 	return d
 }
