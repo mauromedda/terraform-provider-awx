@@ -71,8 +71,9 @@ func resourceProjectObject() *schema.Resource {
 				Optional: true,
 			},
 			"organization_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeInt,
+				Required:    true,
+				Description: "Numeric ID of the project organization",
 			},
 			"scm_update_on_launch": &schema.Schema{
 				Type:     schema.TypeBool,
@@ -100,6 +101,7 @@ func resourceProjectObject() *schema.Resource {
 func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
 	awxService := awx.ProjectService
+
 	_, res, err := awxService.ListProjects(map[string]string{
 		"name":         d.Get("name").(string),
 		"organization": d.Get("organization_id").(string)},
@@ -122,7 +124,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 		"scm_clean":                d.Get("scm_clean").(bool),
 		"scm_delete_on_update":     d.Get("scm_delete_on_update").(bool),
 		"credential_id":            AtoipOr(d.Get("credential_id").(string), nil),
-		"organization":             AtoipOr(d.Get("organization_id").(string), nil),
+		"organization":             d.Get("organization_id").(string),
 		"scm_update_on_launch":     d.Get("scm_update_on_launch").(bool),
 		"scm_update_cache_timeout": d.Get("scm_update_cache_timeout").(int),
 	}, map[string]string{})
