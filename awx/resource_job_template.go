@@ -202,9 +202,7 @@ func resourceJobTemplateCreate(d *schema.ResourceData, m interface{}) error {
 		"name":    d.Get("name").(string),
 		"project": d.Get("project_id").(string)},
 	)
-	if err != nil {
-		return err
-	}
+
 	if len(res.Results) >= 1 {
 		return fmt.Errorf("JobTemplate with name %s already exists",
 			d.Get("name").(string))
@@ -221,11 +219,15 @@ func resourceJobTemplateCreate(d *schema.ResourceData, m interface{}) error {
 		jobID = int(prj.Results[0].SummaryFields.LastJob["id"].(float64))
 	}
 
-	// check if finished is 0
-	for finished.IsZero() {
-		prj, _ := awx.ProjectUpdatesService.ProjectUpdateGet(jobID)
-		finished = prj.Finished
-		time.Sleep(1 * time.Second)
+	if jobID != 0 {
+		// check if finished is 0
+		for finished.IsZero() {
+			prj, _ := awx.ProjectUpdatesService.ProjectUpdateGet(jobID)
+			if prj != nil {
+				finished = prj.Finished
+				time.Sleep(1 * time.Second)
+			}
+		}
 	}
 	result, err := awxService.CreateJobTemplate(map[string]interface{}{
 		"name":                     d.Get("name").(string),
