@@ -29,6 +29,11 @@ func resourceHostObject() *schema.Resource {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
+			"group_ids": &schema.Schema{
+				Type:     schema.TypeList,
+				Elem:     &schema.Schema{Type: schema.TypeInt},
+				Optional: true,
+			},
 			"enabled": &schema.Schema{
 				Type:     schema.TypeBool,
 				Optional: true,
@@ -78,6 +83,19 @@ func resourceHostCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
+	hostID := result.ID
+	if d.IsNewResource() {
+		rawGroups := d.Get("group_ids").([]interface{})
+		for _, v := range rawGroups {
+
+			_, err := awxService.AssociateGroup(hostID, map[string]interface{}{
+				"id": v.(int),
+			}, map[string]string{})
+			if err != nil {
+				return err
+			}
+		}
+	}
 	d.SetId(strconv.Itoa(result.ID))
 	return resourceHostRead(d, m)
 }
@@ -104,6 +122,18 @@ func resourceHostUpdate(d *schema.ResourceData, m interface{}) error {
 			return err
 		}
 
+		if d.HasChange("group_ids") {
+			rawGroups := d.Get("group_ids").([]interface{})
+			for _, v := range rawGroups {
+
+				_, err := awxService.AssociateGroup(id, map[string]interface{}{
+					"id": v.(int),
+				}, map[string]string{})
+				if err != nil {
+					return err
+				}
+			}
+		}
 		return resourceHostRead(d, m)
 	}
 
@@ -147,5 +177,6 @@ func setHostResourceData(d *schema.ResourceData, r *awxgo.Host) *schema.Resource
 	d.Set("enabled", r.Enabled)
 	d.Set("instance_id", r.InstanceID)
 	d.Set("variables", normalizeJsonYaml(r.Variables))
+	d.Set("group_ids", d.Get("group_ids").([]interface{}))
 	return d
 }

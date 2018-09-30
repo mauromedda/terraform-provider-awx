@@ -12,6 +12,10 @@
 - [x] Create the inventory host resource and tests
 - [x] Create inventory tests
       -  [x] Basic CRUD test acc
+- [ ] Create the resource user
+- [ ] Create the resource credential
+- [ ] Create the resource team
+- [ ] Create the resource inventory scripts
 - [ ] Create the resurce organization and tests
-- [ ] Create the resource project and tests
-- [ ] Create the resource job_template and tests
+- [x] Create the resource project and tests
+- [x] Create the resource job_template and tests

@@ -30,4 +30,5 @@ kubernetes_namespace=awx
 tiller_namespace=awx
 EOF
 
+export TILLER_NAMESPACE=awx
 ansible-playbook -i awx/installer/inventory awx/installer/install.yml

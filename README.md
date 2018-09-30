@@ -25,14 +25,14 @@ Building The Provider
 Clone repository to: `$GOPATH/src/github.com/mauromedda/terraform-provider-awx.git`
 
 ```sh
-$ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
+$ mkdir -p $GOPATH/src/github.com/mauromedda; cd $GOPATH/src/github.com/mauromedda
 $ git clone git@github.com:mauromedda/terraform-provider-awx.git
 ```
 
 Enter the provider directory and build the provider
 
 ```sh
-$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-awx
+$ cd $GOPATH/src/github.com/mauromedda/terraform-provider-awx
 $ make build
 ```
 

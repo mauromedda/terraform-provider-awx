@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "lsNpdmM9T20NnNewWkTVKoD1GmU=",
+			"checksumSHA1": "WrkJjglOm1Qq+pnn3ZD0tMWJHEE=",
 			"path": "github.com/Colstuwjx/awx-go",
-			"revision": "d71e2d7610bfe3b5712c12670e424c512d8f2ab5",
-			"revisionTime": "2018-09-02T17:56:01Z"
+			"revision": "aa9ddd064e4e02543320e180ef9c901e326c673b",
+			"revisionTime": "2018-09-29T15:54:40Z"
 		},
 		{
 			"checksumSHA1": "jQh1fnoKPKMURvKkpdRjN695nAQ=",
@@ -715,12 +715,6 @@
 			"path": "github.com/mattn/go-isatty",
 			"revision": "bb37637a139151be0ff9bf00c85c448538e5b3d2",
 			"revisionTime": "2018-08-10T18:32:07Z"
-		},
-		{
-			"checksumSHA1": "Xnyc0HWRLLeNDrgkMzTPstefAwE=",
-			"path": "github.com/mauromedda/terraform-provider-awx",
-			"revision": "280cb21406689f7615035ba593b3c7f42b61856c",
-			"revisionTime": "2018-09-02T15:30:05Z"
 		},
 		{
 			"checksumSHA1": "H3IQOMnazofqqNSyfY/GIx1T3mU=",
