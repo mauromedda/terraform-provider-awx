@@ -223,7 +223,7 @@ func resourceJobTemplateCreate(d *schema.ResourceData, m interface{}) error {
 
 	// check if finished is 0
 	for finished.IsZero() {
-		prj, _ := awx.ProjectService.GetUpdate(jobID)
+		prj, _ := awx.ProjectUpdatesService.ProjectUpdateGet(jobID)
 		finished = prj.Finished
 		time.Sleep(1 * time.Second)
 	}

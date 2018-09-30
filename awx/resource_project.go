@@ -208,14 +208,14 @@ func resourceProjectDelete(d *schema.ResourceData, m interface{}) error {
 		jobID = int(res.Results[0].SummaryFields.LastJob["id"].(float64))
 	}
 	if jobID != 0 {
-		_, err = awx.ProjectService.CancelUpdate(jobID)
+		_, err = awx.ProjectUpdatesService.ProjectUpdateCancel(jobID)
 		if err != nil {
 			return err
 		}
 	}
 	// check if finished is 0
 	for finished.IsZero() {
-		prj, _ := awx.ProjectService.GetUpdate(jobID)
+		prj, _ := awx.ProjectUpdatesService.ProjectUpdateGet(jobID)
 		finished = prj.Finished
 		time.Sleep(1 * time.Second)
 	}
