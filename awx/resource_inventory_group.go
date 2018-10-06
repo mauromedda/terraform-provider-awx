@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	awxgo "github.com/Colstuwjx/awx-go"
+	awxgo "github.com/mauromedda/awx-go"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

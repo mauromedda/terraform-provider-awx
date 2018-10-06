@@ -3,12 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "WrkJjglOm1Qq+pnn3ZD0tMWJHEE=",
-			"path": "github.com/Colstuwjx/awx-go",
-			"revision": "aa9ddd064e4e02543320e180ef9c901e326c673b",
-			"revisionTime": "2018-09-29T15:54:40Z"
-		},
-		{
 			"checksumSHA1": "jQh1fnoKPKMURvKkpdRjN695nAQ=",
 			"origin": "github.com/hashicorp/terraform/vendor/github.com/agext/levenshtein",
 			"path": "github.com/agext/levenshtein",
@@ -699,15 +693,17 @@
 		},
 		{
 			"checksumSHA1": "0xjvz/KGzXhAFsnDRvzofE0xNzI=",
+			"origin": "github.com/mauromedda/awx-go/vendor/github.com/kylelemons/godebug/diff",
 			"path": "github.com/kylelemons/godebug/diff",
-			"revision": "d65d576e9348f5982d7f6d83682b694e731a45c6",
-			"revisionTime": "2017-08-20T00:43:49Z"
+			"revision": "c563cde6cd77a5d9038294d433e2e06378b4805f",
+			"revisionTime": "2018-10-06T16:57:59Z"
 		},
 		{
 			"checksumSHA1": "ED154c1vFO2UMbFwdOZZ9KdfAzw=",
+			"origin": "github.com/mauromedda/awx-go/vendor/github.com/kylelemons/godebug/pretty",
 			"path": "github.com/kylelemons/godebug/pretty",
-			"revision": "d65d576e9348f5982d7f6d83682b694e731a45c6",
-			"revisionTime": "2017-08-20T00:43:49Z"
+			"revision": "c563cde6cd77a5d9038294d433e2e06378b4805f",
+			"revisionTime": "2018-10-06T16:57:59Z"
 		},
 		{
 			"checksumSHA1": "1otkAg+0Q9NksNSuQ3ijCW0xHxE=",
@@ -715,6 +711,12 @@
 			"path": "github.com/mattn/go-isatty",
 			"revision": "bb37637a139151be0ff9bf00c85c448538e5b3d2",
 			"revisionTime": "2018-08-10T18:32:07Z"
+		},
+		{
+			"checksumSHA1": "+ddqLCUM4/a1AkwCaav0F5zNn/E=",
+			"path": "github.com/mauromedda/awx-go",
+			"revision": "c563cde6cd77a5d9038294d433e2e06378b4805f",
+			"revisionTime": "2018-10-06T16:57:59Z"
 		},
 		{
 			"checksumSHA1": "H3IQOMnazofqqNSyfY/GIx1T3mU=",
