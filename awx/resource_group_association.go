@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	awxgo "github.com/mauromedda/awx-go"
 	"github.com/hashicorp/terraform/helper/schema"
+	awxgo "github.com/mauromedda/awx-go"
 )
 
 func resourceGroupAssociationObject() *schema.Resource {

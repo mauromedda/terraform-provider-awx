@@ -53,9 +53,9 @@ const testAccJobTemplateConfig = `
 resource "awx_job_template" "alpha" {
 	name         = "alpha"
 	description  = "Alpha job template example"
-	project_id   = 4
+	project_id   = "4"
 	job_type     = "run"
-	inventory_id = 1
+	inventory_id = "1"
 	playbook     = "hello_world.yml"
   }
 `

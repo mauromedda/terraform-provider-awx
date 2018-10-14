@@ -12,7 +12,7 @@
 - [x] Create the inventory host resource and tests
 - [x] Create inventory tests
       -  [x] Basic CRUD test acc
-- [ ] Create the resource user (CRITICAL)
+- [x] Create the resource user
 - [ ] Create the resource credential (HIGH)
 - [ ] Create the resource team (MEDIUM)
 - [ ] Create the resource inventory scripts (MEDIUM)

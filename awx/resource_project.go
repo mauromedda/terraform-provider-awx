@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	awxgo "github.com/mauromedda/awx-go"
 	"github.com/hashicorp/terraform/helper/schema"
+	awxgo "github.com/mauromedda/awx-go"
 )
 
 func resourceProjectObject() *schema.Resource {
@@ -182,8 +182,7 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 	if len(res.Results) == 0 {
-		return fmt.Errorf("Project with name %s doesn't exists in the organization %s",
-			d.Get("name").(string), d.Get("organization_id"))
+		return nil
 	}
 	d = setProjectResourceData(d, res.Results[0])
 	return nil
@@ -201,6 +200,10 @@ func resourceProjectDelete(d *schema.ResourceData, m interface{}) error {
 	)
 	if err != nil {
 		return err
+	}
+	if len(res.Results) == 0 {
+		d.SetId("")
+		return nil
 	}
 	if res.Results[0].SummaryFields.CurrentJob["id"] != nil {
 		jobID = int(res.Results[0].SummaryFields.CurrentJob["id"].(float64))

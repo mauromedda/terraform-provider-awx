@@ -8,7 +8,7 @@ variable "name" {
 provider "awx" {
   username = "admin"
   password = "password"
-  endpoint = "http://192.168.99.100:30394"
+  endpoint = "http://192.168.99.100:32309"
 }
 
 data "template_file" "default_yaml" {
@@ -82,4 +82,11 @@ resource "awx_job_template" "alpha" {
   job_type     = "run"
   inventory_id = "${awx_inventory.default.id}"
   playbook     = "hello_world.yml"
+}
+
+resource "awx_user" "test" {
+  username     = "mauromedda"
+  password     = "password"
+  email        = "medda.mauro@gmail.com"
+  is_superuser = true
 }

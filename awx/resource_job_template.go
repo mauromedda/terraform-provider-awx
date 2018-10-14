@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	awxgo "github.com/mauromedda/awx-go"
 	"github.com/hashicorp/terraform/helper/schema"
+	awxgo "github.com/mauromedda/awx-go"
 )
 
 func resourceJobTemplateObject() *schema.Resource {
@@ -343,9 +343,7 @@ func resourceJobTemplateRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 	if len(res.Results) == 0 {
-		d.SetId("")
-		return fmt.Errorf("JobTemplate with name %s doesn't exists",
-			d.Get("name").(string))
+		return nil
 	}
 	d = setJobTemplateResourceData(d, res.Results[0])
 	return nil
@@ -362,8 +360,8 @@ func resourceJobTemplateDelete(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 	if len(res.Results) == 0 {
-		return fmt.Errorf("JobTemplate with name %s doesn't exists",
-			d.Get("name").(string))
+		d.SetId("")
+		return nil
 	}
 
 	id, err := strconv.Atoi(d.Id())
