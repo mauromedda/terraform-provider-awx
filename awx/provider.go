@@ -55,7 +55,9 @@ func Provider() terraform.ResourceProvider {
 			"awx_project":           resourceProjectObject(),
 			"awx_job_template":      resourceJobTemplateObject(),
 			"awx_user":              resourceUserObject(),
+			"awx_team":              resourceTeamObject(),
 			"awx_user_role":         resourceUserRoleObject(),
+			"awx_team_role":         resourceTeamRoleObject(),
 		},
 
 		ConfigureFunc: providerConfigure,

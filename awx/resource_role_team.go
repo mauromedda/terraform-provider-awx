@@ -9,14 +9,14 @@ import (
 	awxgo "github.com/mauromedda/awx-go"
 )
 
-func resourceUserRoleObject() *schema.Resource {
+func resourceTeamRoleObject() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceUserRoleGrant,
-		Read:   resourceUserRoleRead,
-		Delete: resourceUserRoleRevoke,
+		Create: resourceTeamRoleGrant,
+		Read:   resourceTeamRoleRead,
+		Delete: resourceTeamRoleRevoke,
 
 		Schema: map[string]*schema.Schema{
-			"user_id": &schema.Schema{
+			"team_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
@@ -71,20 +71,20 @@ func resourceUserRoleObject() *schema.Resource {
 	}
 }
 
-func resourceUserRoleGrant(d *schema.ResourceData, m interface{}) error {
+func resourceTeamRoleGrant(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
-	awxService := awx.UserService
-	_, res, err := awxService.ListUsers(map[string]string{
-		"id": d.Get("user_id").(string)},
+	awxService := awx.TeamService
+	_, res, err := awxService.ListTeams(map[string]string{
+		"id": d.Get("team_id").(string)},
 	)
 	if err != nil {
 		return err
 	}
 	if len(res.Results) == 0 {
-		return fmt.Errorf("User with Id %s doesn't exists",
-			d.Get("user_id").(string))
+		return fmt.Errorf("Team with Id %s doesn't exists",
+			d.Get("team_id").(string))
 	}
-	id, _ := strconv.Atoi(d.Get("user_id").(string))
+	id, _ := strconv.Atoi(d.Get("team_id").(string))
 	roleID, err := getRoleID(d, m)
 	if err == nil {
 		err = awxService.GrantRole(id, roleID)
@@ -94,28 +94,28 @@ func resourceUserRoleGrant(d *schema.ResourceData, m interface{}) error {
 	} else {
 		return err
 	}
-	d.SetId(d.Get("user_id").(string))
-	return resourceUserRoleRead(d, m)
+	d.SetId(d.Get("team_id").(string))
+	return resourceTeamRoleRead(d, m)
 
 }
 
-func resourceUserRoleRevoke(d *schema.ResourceData, m interface{}) error {
+func resourceTeamRoleRevoke(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
-	awxService := awx.UserService
+	awxService := awx.TeamService
 
-	_, res, err := awxService.ListUsers(map[string]string{
-		"id": d.Get("user_id").(string)},
+	_, res, err := awxService.ListTeams(map[string]string{
+		"id": d.Get("team_id").(string)},
 	)
 	if err != nil {
 		return err
 	}
 	if len(res.Results) == 0 {
-		return fmt.Errorf("User with Id %s doesn't exists",
-			d.Get("user_id").(string))
+		return fmt.Errorf("Team with Id %s doesn't exists",
+			d.Get("team_id").(string))
 	}
 	roleID, err := getRoleID(d, m)
 	if err == nil {
-		id, _ := strconv.Atoi(d.Get("user_id").(string))
+		id, _ := strconv.Atoi(d.Get("team_id").(string))
 		err = awxService.RevokeRole(id, roleID)
 		if err != nil {
 			return err
@@ -124,27 +124,27 @@ func resourceUserRoleRevoke(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 	d.SetId("")
-	return resourceUserRoleRead(d, m)
+	return resourceTeamRoleRead(d, m)
 }
 
-func resourceUserRoleRead(d *schema.ResourceData, m interface{}) error {
+func resourceTeamRoleRead(d *schema.ResourceData, m interface{}) error {
 	awx := m.(*awxgo.AWX)
-	awxService := awx.UserService
-	_, res, err := awxService.ListUsers(map[string]string{
-		"id": d.Get("user_id").(string)})
+	awxService := awx.TeamService
+	_, res, err := awxService.ListTeams(map[string]string{
+		"id": d.Get("team_id").(string)})
 	if err != nil {
 		return err
 	}
 	if len(res.Results) == 0 {
 		return nil
 	}
-	d = setUserRoleResourceData(d, res.Results[0])
+	d = setTeamRoleResourceData(d, res.Results[0])
 	return nil
 }
 
-func setUserRoleResourceData(d *schema.ResourceData, r *awxgo.User) *schema.ResourceData {
-	d.Set("username", r.Username)
-	d.Set("user_id", r.ID)
+func setTeamRoleResourceData(d *schema.ResourceData, r *awxgo.Team) *schema.ResourceData {
+	d.Set("name", r.Name)
+	d.Set("team_id", r.ID)
 	d.Set("resource_name", d.Get("resource_name").(string))
 	d.Set("resource_type", d.Get("resource_type").(string))
 	d.Set("role", d.Get("role").(string))

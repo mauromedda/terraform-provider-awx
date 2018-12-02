@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/hashicorp/terraform/helper/schema"
+	awxgo "github.com/mauromedda/awx-go"
 	"gopkg.in/yaml.v2"
 )
 
@@ -52,4 +54,91 @@ func normalizeYamlOk(s interface{}) (string, bool) {
 func normalizeYaml(s interface{}) string {
 	v, _ := normalizeYamlOk(s)
 	return v
+}
+
+func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
+	awx := m.(*awxgo.AWX)
+	switch d.Get("resource_type").(string) {
+	case "inventory":
+		awxService := awx.InventoriesService
+		obj, _, err := awxService.ListInventories(map[string]string{
+			"name":         d.Get("resource_name").(string),
+			"organization": d.Get("organization_id").(string),
+		})
+		if err != nil {
+			return 0, err
+		}
+		if d.Get("role").(string) == "admin" {
+			return obj[0].SummaryFields.ObjectRoles.AdminRole.ID, nil
+		} else if d.Get("role").(string) == "use" {
+			return obj[0].SummaryFields.ObjectRoles.UseRole.ID, nil
+		} else if d.Get("role").(string) == "read" {
+			return obj[0].SummaryFields.ObjectRoles.ReadRole.ID, nil
+		} else if d.Get("role").(string) == "update" {
+			return obj[0].SummaryFields.ObjectRoles.UpdateRole.ID, nil
+		} else {
+			return 0, fmt.Errorf("Role not valid for inventory")
+		}
+
+	case "team":
+		awxService := awx.TeamService
+		obj, _, err := awxService.ListTeams(map[string]string{
+			"name":         d.Get("resource_name").(string),
+			"organization": d.Get("organization_id").(string),
+		})
+		if err != nil {
+			return 0, err
+		}
+		if d.Get("role").(string) == "admin" {
+			return obj[0].SummaryFields.ObjectRoles.AdminRole.ID, nil
+		} else if d.Get("role").(string) == "member" {
+			return obj[0].SummaryFields.ObjectRoles.MemberRole.ID, nil
+		} else if d.Get("role").(string) == "read" {
+			return obj[0].SummaryFields.ObjectRoles.ReadRole.ID, nil
+		} else {
+			return 0, fmt.Errorf("Role not valid for team object")
+		}
+	case "organization":
+		return 0, fmt.Errorf("Organization endpoint not implemeneted")
+	case "job_template":
+		awxService := awx.JobTemplateService
+		obj, _, err := awxService.ListJobTemplates(map[string]string{
+			"name": d.Get("resource_name").(string),
+		})
+		if err != nil {
+			return 0, err
+		}
+		if d.Get("role").(string) == "admin" {
+			return obj[0].SummaryFields.ObjectRoles.AdminRole.ID, nil
+		} else if d.Get("role").(string) == "execute" {
+			return obj[0].SummaryFields.ObjectRoles.ExecuteRole.ID, nil
+		} else if d.Get("role").(string) == "read" {
+			return obj[0].SummaryFields.ObjectRoles.ReadRole.ID, nil
+		} else {
+			return 0, fmt.Errorf("Role not valid for Job Template")
+		}
+	case "credential":
+		return 0, fmt.Errorf("Credential endpoint not implemeneted")
+	case "project":
+		awxService := awx.ProjectService
+		obj, _, err := awxService.ListProjects(map[string]string{
+			"name":         d.Get("resource_name").(string),
+			"organization": d.Get("organization_id").(string),
+		})
+		if err != nil {
+			return 0, err
+		}
+		if d.Get("role").(string) == "admin" {
+			return obj[0].SummaryFields.ObjectRoles.AdminRole.ID, nil
+		} else if d.Get("role").(string) == "update" {
+			return obj[0].SummaryFields.ObjectRoles.UpdateRole.ID, nil
+		} else if d.Get("role").(string) == "read" {
+			return obj[0].SummaryFields.ObjectRoles.ReadRole.ID, nil
+		} else if d.Get("role").(string) == "use" {
+			return obj[0].SummaryFields.ObjectRoles.UseRole.ID, nil
+		} else {
+			return 0, fmt.Errorf("Role not valid for Project")
+		}
+	}
+	return 0, fmt.Errorf("Not implemented API endpoint")
 }

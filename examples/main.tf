@@ -114,3 +114,26 @@ resource "awx_user_role" "jobtemplate_alpha_execute" {
         role = "execute"
         organization_id = 1
 }
+
+
+resource "awx_team" "automation_team" {
+        name = "automation_team"
+        description = "Automation team"
+        organization_id = 1
+}
+
+resource "awx_user_role" "automation_team_member" {
+        user_id = "${awx_user.test.id}"
+        resource_type = "team"
+        resource_name = "${awx_team.automation_team.name}"
+        role = "member"
+        organization_id = 1
+}
+
+resource "awx_team_role" "automation_team_inventory_admin" {
+        team_id = "${awx_team.automation_team.id}"
+        resource_type = "inventory"
+        resource_name = "${awx_inventory.default.name}"
+        role = "admin"
+        organization_id = 1
+}
