@@ -8,7 +8,7 @@ variable "name" {
 provider "awx" {
   username = "admin"
   password = "password"
-  endpoint = "http://192.168.99.100:32309"
+  endpoint = "http://192.168.99.100:30967"
 }
 
 data "template_file" "default_yaml" {
@@ -89,4 +89,28 @@ resource "awx_user" "test" {
   password     = "password"
   email        = "medda.mauro@gmail.com"
   is_superuser = true
+}
+
+resource "awx_user_role" "inventory_test_admin" {
+	user_id = "${awx_user.test.id}"
+	resource_type = "inventory"
+	resource_name = "${awx_inventory.default.name}"
+	role = "admin"
+	organization_id = 1
+}
+
+resource "awx_user_role" "project_alpha_use" {
+        user_id = "${awx_user.test.id}"
+        resource_type = "project"
+        resource_name = "${awx_project.alpha.name}"
+        role = "use"
+        organization_id = 1
+}
+
+resource "awx_user_role" "jobtemplate_alpha_execute" {
+        user_id = "${awx_user.test.id}"
+        resource_type = "job_template"
+        resource_name = "${awx_job_template.alpha.name}"
+        role = "execute"
+        organization_id = 1
 }
