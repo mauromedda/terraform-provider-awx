@@ -32,7 +32,8 @@ func resourceTeamRoleObject() *schema.Resource {
 				ForceNew: true,
 				ValidateFunc: func(v interface{}, k string) (ws []string, errors []error) {
 					validResourceTypes := map[string]bool{"admin": true, "read": true, "use": true,
-						"member": true, "execute": true, "adhoc": true, "update": true, "auditor": true}
+						"member": true, "execute": true, "adhoc": true, "update": true, "auditor": true,
+						"project admin": true, "workflow admin": true, "inventory admin": true, "job template admin": true}
 					value := v.(string)
 					if !validResourceTypes[value] {
 						errors = append(errors, fmt.Errorf("%q must match one of the valid vaules", k))

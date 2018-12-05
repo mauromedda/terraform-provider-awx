@@ -695,15 +695,15 @@
 			"checksumSHA1": "0xjvz/KGzXhAFsnDRvzofE0xNzI=",
 			"origin": "github.com/mauromedda/awx-go/vendor/github.com/kylelemons/godebug/diff",
 			"path": "github.com/kylelemons/godebug/diff",
-			"revision": "4b832e4ed1febec7ce03006d01d297cf6d81f748",
-			"revisionTime": "2018-12-02T15:05:06Z"
+			"revision": "05ca5d1b5bc0826524d0e0cb20b238f4af1a85ed",
+			"revisionTime": "2018-12-05T22:26:06Z"
 		},
 		{
 			"checksumSHA1": "ED154c1vFO2UMbFwdOZZ9KdfAzw=",
 			"origin": "github.com/mauromedda/awx-go/vendor/github.com/kylelemons/godebug/pretty",
 			"path": "github.com/kylelemons/godebug/pretty",
-			"revision": "4b832e4ed1febec7ce03006d01d297cf6d81f748",
-			"revisionTime": "2018-12-02T15:05:06Z"
+			"revision": "05ca5d1b5bc0826524d0e0cb20b238f4af1a85ed",
+			"revisionTime": "2018-12-05T22:26:06Z"
 		},
 		{
 			"checksumSHA1": "1otkAg+0Q9NksNSuQ3ijCW0xHxE=",
@@ -713,10 +713,10 @@
 			"revisionTime": "2018-08-10T18:32:07Z"
 		},
 		{
-			"checksumSHA1": "BflKwMri4HnkrhtXUmq7aQf9EUg=",
+			"checksumSHA1": "FLCwAdLARBq+0U2y4c4TvQwY5lg=",
 			"path": "github.com/mauromedda/awx-go",
-			"revision": "4b832e4ed1febec7ce03006d01d297cf6d81f748",
-			"revisionTime": "2018-12-02T15:05:06Z"
+			"revision": "05ca5d1b5bc0826524d0e0cb20b238f4af1a85ed",
+			"revisionTime": "2018-12-05T22:26:06Z"
 		},
 		{
 			"checksumSHA1": "H3IQOMnazofqqNSyfY/GIx1T3mU=",

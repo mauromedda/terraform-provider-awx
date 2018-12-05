@@ -99,7 +99,36 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 			return 0, fmt.Errorf("Role not valid for team object")
 		}
 	case "organization":
-		return 0, fmt.Errorf("Organization endpoint not implemeneted")
+		awxService := awx.OrganizationService
+		obj, _, err := awxService.ListOrganizations(map[string]string{
+			"name": d.Get("resource_name").(string),
+		})
+		if err != nil {
+			return 0, err
+		}
+		if d.Get("role").(string) == "admin" {
+			return obj[0].SummaryFields.ObjectRoles.AdminRole.ID, nil
+		} else if d.Get("role").(string) == "member" {
+			return obj[0].SummaryFields.ObjectRoles.MemberRole.ID, nil
+		} else if d.Get("role").(string) == "read" {
+			return obj[0].SummaryFields.ObjectRoles.ReadRole.ID, nil
+		} else if d.Get("role").(string) == "member" {
+			return obj[0].SummaryFields.ObjectRoles.MemberRole.ID, nil
+		} else if d.Get("role").(string) == "workflow admin" {
+			return obj[0].SummaryFields.ObjectRoles.WorkflowAdminRole.ID, nil
+		} else if d.Get("role").(string) == "credential admin" {
+			return obj[0].SummaryFields.ObjectRoles.CredentialAdminRole.ID, nil
+		} else if d.Get("role").(string) == "job template admin" {
+			return obj[0].SummaryFields.ObjectRoles.JobTemplateAdminRole.ID, nil
+		} else if d.Get("role").(string) == "project admin" {
+			return obj[0].SummaryFields.ObjectRoles.ProjectAdminRole.ID, nil
+		} else if d.Get("role").(string) == "auditor" {
+			return obj[0].SummaryFields.ObjectRoles.AuditorRole.ID, nil
+		} else if d.Get("role").(string) == "inventory admin" {
+			return obj[0].SummaryFields.ObjectRoles.InventoryAdminRole.ID, nil
+		} else {
+			return 0, fmt.Errorf("Role not valid for organization object")
+		}
 	case "job_template":
 		awxService := awx.JobTemplateService
 		obj, _, err := awxService.ListJobTemplates(map[string]string{
