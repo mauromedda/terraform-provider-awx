@@ -137,3 +137,8 @@ resource "awx_team_role" "automation_team_inventory_admin" {
         role = "admin"
         organization_id = 1
 }
+
+resource "awx_organization" "deftunix_org" {
+	name = "deftunix-org"
+	description = "deftunix organization"
+}

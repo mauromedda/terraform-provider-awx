@@ -15,6 +15,6 @@
 - [x] Create the resource team
 - [x] Teams' role resource
 - [ ] Create the resource inventory scripts (MEDIUM)
-- [ ] Create the resurce organization and tests (LOW)
+- [-] Create the resurce organization and tests
 - [x] Create the resource project and tests
 - [x] Create the resource job_template and tests
