@@ -71,7 +71,7 @@ func resourceProjectObject() *schema.Resource {
 				Optional: true,
 			},
 			"organization_id": &schema.Schema{
-				Type:        schema.TypeInt,
+				Type:        schema.TypeString,
 				Required:    true,
 				Description: "Numeric ID of the project organization",
 			},

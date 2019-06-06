@@ -10,9 +10,9 @@
 - [x] Basic CRUD test acc
 - [x] Create the resource user
 - [x] Users' role resource
-- [ ] Create the resource credential (HIGH)
+- [x] Create the resource credential
 - [ ] Create the resource credential type (HIGH)
-- [ ] Create resource documentation
+- [ ] Create resource documentation (HIGH)
 - [x] Create the resource team
 - [x] Teams' role resource
 - [ ] Create the resource inventory scripts (MEDIUM)

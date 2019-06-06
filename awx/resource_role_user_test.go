@@ -54,12 +54,4 @@ resource "awx_user_role" "testacc-user_role_1" {
 	resource_name = "Demo Inventory"
 	role = "admin"
   }
-
-  resource "awx_user_role" "testacc-user_role_2" {
-	user_id = 4
-	organization_id = 1
-	resource_type = "organization"
-	resource_name = "organization"
-	role = "inventory admin"
-  }
 `

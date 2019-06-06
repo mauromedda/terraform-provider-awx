@@ -65,6 +65,9 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 			"name":         d.Get("resource_name").(string),
 			"organization": d.Get("organization_id").(string),
 		})
+		if len(obj) == 0 {
+			return 0, fmt.Errorf("%s not found", d.Get("resource_type").(string))
+		}
 		if err != nil {
 			return 0, err
 		}
@@ -86,6 +89,9 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 			"name":         d.Get("resource_name").(string),
 			"organization": d.Get("organization_id").(string),
 		})
+		if len(obj) == 0 {
+			return 0, fmt.Errorf("%s not found", d.Get("resource_type").(string))
+		}
 		if err != nil {
 			return 0, err
 		}
@@ -103,6 +109,9 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 		obj, _, err := awxService.ListOrganizations(map[string]string{
 			"name": d.Get("resource_name").(string),
 		})
+		if len(obj) == 0 {
+			return 0, fmt.Errorf("%s not found", d.Get("resource_type").(string))
+		}
 		if err != nil {
 			return 0, err
 		}
@@ -134,6 +143,9 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 		obj, _, err := awxService.ListJobTemplates(map[string]string{
 			"name": d.Get("resource_name").(string),
 		})
+		if len(obj) == 0 {
+			return 0, fmt.Errorf("%s not found", d.Get("resource_type").(string))
+		}
 		if err != nil {
 			return 0, err
 		}
@@ -154,6 +166,9 @@ func getRoleID(d *schema.ResourceData, m interface{}) (int, error) {
 			"name":         d.Get("resource_name").(string),
 			"organization": d.Get("organization_id").(string),
 		})
+		if len(obj) == 0 {
+			return 0, fmt.Errorf("%s not found", d.Get("resource_type").(string))
+		}
 		if err != nil {
 			return 0, err
 		}
